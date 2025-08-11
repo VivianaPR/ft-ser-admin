@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./shared/home";
 import { AdminRoutes } from './routes/adminRoutes';
 import 'animate.css';
-
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 

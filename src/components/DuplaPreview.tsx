@@ -1,6 +1,9 @@
 import type { Persona } from '../utils/types';
-import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
-
+import {
+    FaArrowTrendUp,
+    FaArrowTrendDown,
+    FaArrowRightArrowLeft,
+} from 'react-icons/fa6';
 
 const DuplaPreview = ({
     analista,
@@ -13,38 +16,60 @@ const DuplaPreview = ({
     onConfirm: (a: Persona, r: Persona) => void;
     onDesestimar: () => void;
 }) => {
-    const match = Math.abs(analista.experiencia - revisor.experiencia) <= 2;
+    
+    const diferencia = Math.abs(analista.experiencia - revisor.experiencia);
+    const compatibilidad = Math.max(0, 100 - diferencia * 10);
+    const esAlta = compatibilidad >= 80;
+    const esMedia = compatibilidad >= 60 && compatibilidad < 80;
+
+    const TrendIcon = esAlta
+        ? FaArrowTrendUp
+        : esMedia
+            ? FaArrowRightArrowLeft
+            : FaArrowTrendDown;
+
+    const colorClase = esAlta
+        ? 'text-success'
+        : esMedia
+            ? 'text-warning'
+            : 'text-danger';
+
+    const etiqueta = esAlta
+        ? 'Alta compatibilidad'
+        : esMedia
+            ? 'Compatibilidad media'
+            : 'Baja compatibilidad';
 
     return (
-        <div className="alert-info animate__animated animate__fadeInDown"
+        <div
+            className="alert-info animate__animated animate__fadeInDown"
             style={{
-                padding: '1rem',
                 display: 'flex',
                 flexDirection: 'column',
                 borderRadius: '10px',
                 alignItems: 'center',
-            }}>
-            {/* <p>
-                <strong>Dupla:</strong> {analista.nombre} + {revisor.nombre}
-            </p> */}
+            }}
+        >
             <p className="d-flex align-items-center gap-2">
-                {match ? (
-                    <>
-                        <FaCheckCircle style={{ color: '#0cb452ff' }} />
-                        <span style={{ color: '#0cb452ff' }}>Match</span>
-                    </>
-                ) : (
-                    <>
-                        <FaTimesCircle style={{ color: '#df1818ff' }} />
-                        <span style={{ color: '#df1818ff' }} >No Match</span>
-                    </>
-                )}
+                <TrendIcon className={colorClase} size={18} />
+                <span>
+                    {etiqueta} ({compatibilidad}%)
+                </span>
             </p>
+
             <div className="d-flex gap-2" style={{ width: '100%' }}>
-                <button className="btn btn-outline-primary" onClick={() => onConfirm(analista, revisor)} style={{ width: '100%' }}>
-                    Confirmar Dupla
+                <button
+                    className="btn btn-outline-custom"
+                    onClick={() => onConfirm(analista, revisor)}
+                    style={{ width: '100%' }}
+                >
+                    Agregar Dupla
                 </button>
-                <button className="btn btn-outline-danger" onClick={onDesestimar} style={{ width: '100%' }}>
+                <button
+                    className="btn btn-outline-danger"
+                    onClick={onDesestimar}
+                    style={{ width: '100%' }}
+                >
                     Desestimar Dupla
                 </button>
             </div>
@@ -53,4 +78,6 @@ const DuplaPreview = ({
 };
 
 export default DuplaPreview;
+
+
 

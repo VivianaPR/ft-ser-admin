@@ -3,10 +3,24 @@
   padding: 0;
 }
 
-.subtitulo-subtitle {
+.scroll-invisible {
+  overflow-y: auto;
+  scrollbar-width: none; 
+  -ms-overflow-style: none;
+}
+
+.scroll-invisible::-webkit-scrollbar {
+  display: none;
+}
+
+.btn-outline-custom {
+  border: 1px solid #303d50;
+  color: #303d50;
+  background-color: transparent;
+}
+
+.btn-outline-custom:hover {
+  background-color: #303d50;
   color: white;
 }
 
-.subtitulo-icon {
-  color: white;
-}

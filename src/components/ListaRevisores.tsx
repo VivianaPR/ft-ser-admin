@@ -5,18 +5,18 @@ import { useState } from 'react';
 import { MdOutlineCancel } from "react-icons/md";
 
 const ListaRevisores = ({ revisores }: { revisores: Persona[] }) => {
-
     const [filtro, setFiltro] = useState('');
-    
-    const revisoresFiltrados = revisores.filter(a =>
-        a.nombre.toLowerCase().includes(filtro.toLowerCase())
+
+    const revisoresFiltrados = revisores.filter(r =>
+        r.nombre.toLowerCase().includes(filtro.toLowerCase())
     );
 
     const limpiarFiltro = () => setFiltro('');
 
     return (
-        <div>
-            <div className="position-relative mb-4">
+        <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+            {/* Buscador fijo */}
+            <div className="position-relative mb-3">
                 <input
                     type="text"
                     className="form-control pe-5"
@@ -36,9 +36,19 @@ const ListaRevisores = ({ revisores }: { revisores: Persona[] }) => {
                     </button>
                 )}
             </div>
-            {revisoresFiltrados.map((r) => (
-                <DraggableCard key={r.id} persona={r} />
-            ))}
+
+            {/* Lista scrollable */}
+            <div
+                className="scroll-invisible"
+                style={{
+                    overflowY: 'auto',
+                    flexGrow: 1,
+                }}
+            >
+                {revisoresFiltrados.map(r => (
+                    <DraggableCard key={r.id} persona={r} />
+                ))}
+            </div>
         </div>
     );
 };
@@ -59,13 +69,21 @@ const DraggableCard = ({ persona }: { persona: Persona }) => {
             ref={setNodeRef}
             {...listeners}
             {...attributes}
-            className="card mb-2 p-2 bg-light"
+            className="card mb-2 px-3 py-2 bg-light column"
             style={style}
         >
-            
-            {persona.nombre} ({persona.experiencia} años)
+            <strong>
+                {persona.nombre}
+            </strong>
+            <span>
+                {persona.experiencia} años
+            </span>
+            <span>
+                {persona.especialidad}
+            </span>
         </div>
     );
 };
 
 export default ListaRevisores;
+

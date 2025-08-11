@@ -14,8 +14,9 @@ const ListaAnalistas = ({ analistas }: { analistas: Persona[] }) => {
     const limpiarFiltro = () => setFiltro('');
 
     return (
-        <div>
-            <div className="position-relative mb-4">
+        <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+            {/* Buscador fijo */}
+            <div className="position-relative mb-3">
                 <input
                     type="text"
                     className="form-control pe-5"
@@ -35,10 +36,21 @@ const ListaAnalistas = ({ analistas }: { analistas: Persona[] }) => {
                     </button>
                 )}
             </div>
-            {analistasFiltrados.map(a => (
-                <DraggableCard key={a.id} persona={a} />
-            ))}
+
+            {/* Lista scrollable */}
+            <div
+                className="scroll-invisible"
+                style={{
+                    overflowY: 'auto',
+                    flexGrow: 1,
+                }}
+            >
+                {analistasFiltrados.map(a => (
+                    <DraggableCard key={a.id} persona={a} />
+                ))}
+            </div>
         </div>
+
     );
 };
 
@@ -58,10 +70,18 @@ const DraggableCard = ({ persona }: { persona: Persona }) => {
             ref={setNodeRef}
             {...listeners}
             {...attributes}
-            className="card mb-2 p-2 bg-light"
+            className="card mb-2 px-3 py-2 bg-light column"
             style={style}
         >
-            {persona.nombre} ({persona.experiencia} años)
+            <strong>
+                {persona.nombre}
+            </strong>
+            <span>
+                {persona.experiencia} años
+            </span>
+            <span>
+                {persona.especialidad}
+            </span>
         </div>
     );
 };
