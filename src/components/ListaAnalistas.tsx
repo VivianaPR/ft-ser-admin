@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { MdOutlineCancel } from "react-icons/md";
 
 const ListaAnalistas = ({ analistas }: { analistas: Persona[] }) => {
-    const [filtro, setFiltro] = useState('');
+    const [filtro, setFiltro] = useState(''); /* hook -- Control de cambios - obs*/
 
     const analistasFiltrados = analistas.filter(a =>
         a.nombre.toLowerCase().includes(filtro.toLowerCase())
@@ -14,7 +14,7 @@ const ListaAnalistas = ({ analistas }: { analistas: Persona[] }) => {
     const limpiarFiltro = () => setFiltro('');
 
     return (
-        <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ height: '100%', display: 'flex', flexDirection: 'column'}}>
             {/* Buscador fijo */}
             <div className="position-relative mb-3">
                 <input
@@ -70,7 +70,7 @@ const DraggableCard = ({ persona }: { persona: Persona }) => {
             ref={setNodeRef}
             {...listeners}
             {...attributes}
-            className="card mb-2 px-3 py-2 bg-light column"
+            className="card mb-2 px-3 py-2 bg-primary column"
             style={style}
         >
             <strong>
